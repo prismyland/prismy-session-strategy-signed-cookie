@@ -2,6 +2,11 @@
 
 Signed cookie session strategy for prismy
 
+[![Build Status](https://travis-ci.com/prismyland/prismy-session-strategy-signed-cookie.svg?branch=master)](https://travis-ci.com/prismyland/prismy-session-strategy-signed-cookie)
+[![codecov](https://codecov.io/gh/prismyland/prismy-session-strategy-signed-cookie/branch/master/graph/badge.svg)](https://codecov.io/gh/prismyland/prismy-session-strategy-signed-cookie)
+[![NPM download](https://img.shields.io/npm/dm/prismy-session-strategy-signed-cookie.svg)](https://www.npmjs.com/package/prismy-session-strategy-signed-cookie)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/prismyland/prismy-session-strategy-signed-cookie.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/prismyland/prismy-session-strategy-signed-cookie/context:javascript)
+
 ```
 npm i prismy-session prismy-session-strategy-signed-cookie
 ```
