@@ -11,18 +11,17 @@
   "author": "Junyoung Choi <rokt33r.choi@gmail.com>",
   "homepage": "https://github.com/prismyland/prismy-session-strategy-signed-cookie",
   "license": "MIT",
-  "main": "dist",
-  "types": "dist",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist/**/*",
-    "!dist/specs/**/*"
+    "dist/**/*"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/prismyland/prismy-session-strategy-signed-cookie.git"
   },
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -P tsconfig.build.json",
     "lint": "prettier --check src/**/*.ts examples/*/src/**/*.ts",
     "format": "prettier --write src/**/*.ts examples/*/src/**/*.ts",
     "test": "ava --verbose",
