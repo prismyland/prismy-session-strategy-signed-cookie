@@ -7,7 +7,7 @@ import {
 import { sign, unsign } from 'cookie-signature'
 import { Strategy, SessionState } from 'prismy-session'
 
-export interface CookieStrategyOptions {
+export interface SignedCookieStrategyOptions {
   name?: string
   secret: string
   secure?: boolean | ((context: Context) => boolean)
@@ -20,19 +20,19 @@ export interface CookieStrategyOptions {
 
 type DefaultOptionKeys = 'name' | 'maxAge' | 'httpOnly' | 'secure' | 'path'
 
-type InternalCookieStrategyOptions = Required<
-  Pick<CookieStrategyOptions, DefaultOptionKeys>
+type InternalSignedCookieStrategyOptions = Required<
+  Pick<SignedCookieStrategyOptions, DefaultOptionKeys>
 > &
-  Omit<CookieStrategyOptions, DefaultOptionKeys>
+  Omit<SignedCookieStrategyOptions, DefaultOptionKeys>
 
 const signedCookieRegExp = /^s:.+/
 
 export class SignedCookieStrategy implements Strategy {
   value?: unknown
-  options: InternalCookieStrategyOptions
+  options: InternalSignedCookieStrategyOptions
   cookieStoreSymbol = Symbol('prismy-session-cookie-store')
 
-  constructor(options: CookieStrategyOptions) {
+  constructor(options: SignedCookieStrategyOptions) {
     this.options = {
       name: 'session',
       maxAge: 86400,
