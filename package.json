@@ -1,6 +1,6 @@
 {
   "name": "prismy-session-strategy-signed-cookie",
-  "version": "0.0.1-0",
+  "version": "0.0.1-1",
   "description": "Signed cookie session strategy for prismy",
   "keywords": [
     "prismy",
