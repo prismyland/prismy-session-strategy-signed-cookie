@@ -105,7 +105,7 @@ test('SignedCookieStrategy#loadData returns null if session data is invalid(Wron
   })
   class Handler {
     async handle(@Session() session: SessionState<any>) {
-      return null
+      return session.data
     }
   }
 
@@ -135,7 +135,7 @@ test('SignedCookieStrategy#loadData returns null if session data is invalid(Inva
   })
   class Handler {
     async handle(@Session() session: SessionState<any>) {
-      return null
+      return session.data
     }
   }
 
