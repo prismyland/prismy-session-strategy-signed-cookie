@@ -1,9 +1,5 @@
 import { Context } from 'prismy'
-import {
-  createCookieSelector,
-  CookieStore,
-  CookieSerializeOptions
-} from 'prismy-cookie'
+import { cookieSelector, CookieSerializeOptions } from 'prismy-cookie'
 import { sign, unsign } from 'cookie-signature'
 import { Strategy, SessionState } from 'prismy-session'
 
@@ -30,7 +26,6 @@ const signedCookieRegExp = /^s:.+/
 export class SignedCookieStrategy implements Strategy {
   value?: unknown
   options: InternalSignedCookieStrategyOptions
-  cookieStoreSymbol = Symbol('prismy-session-cookie-store')
 
   constructor(options: SignedCookieStrategyOptions) {
     this.options = {
@@ -44,23 +39,13 @@ export class SignedCookieStrategy implements Strategy {
   }
 
   loadData(context: Context): unknown | null {
-    const cookieStore = this.getCookieStore(context)
+    const cookieStore = cookieSelector(context)
     const cookie = cookieStore.get()
 
     if (cookie[this.options.name] == null) return null
     const serializedData = cookie[this.options.name]
 
     return this.deserialize(serializedData)
-  }
-
-  getCookieStore(context: Context) {
-    let cookieStore: CookieStore | undefined = context[this.cookieStoreSymbol]
-    if (cookieStore == null) {
-      context[this.cookieStoreSymbol] = cookieStore = createCookieSelector()(
-        context
-      )
-    }
-    return cookieStore
   }
 
   async finalize(context: Context, session: SessionState) {
@@ -87,7 +72,7 @@ export class SignedCookieStrategy implements Strategy {
   }
 
   save(context: Context, session: SessionState) {
-    const cookieStore = this.getCookieStore(context)
+    const cookieStore = cookieSelector(context)
     cookieStore.set([
       this.options.name,
       this.serialize(session.data),
@@ -96,7 +81,7 @@ export class SignedCookieStrategy implements Strategy {
   }
 
   destroy(context: Context, session: SessionState) {
-    const cookieStore = this.getCookieStore(context)
+    const cookieStore = cookieSelector(context)
     cookieStore.set([
       this.options.name,
       '',
