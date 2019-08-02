@@ -1,7 +1,7 @@
 import { Context } from 'prismy'
 import { cookieSelector, CookieSerializeOptions } from 'prismy-cookie'
 import { sign, unsign } from 'cookie-signature'
-import { Strategy, SessionState } from 'prismy-session'
+import { SessionStrategy, SessionState } from 'prismy-session'
 
 export interface SignedCookieStrategyOptions {
   name?: string
@@ -23,7 +23,7 @@ type InternalSignedCookieStrategyOptions = Required<
 
 const signedCookieRegExp = /^s:.+/
 
-export class SignedCookieStrategy implements Strategy {
+export class SignedCookieStrategy implements SessionStrategy {
   value?: unknown
   options: InternalSignedCookieStrategyOptions
 

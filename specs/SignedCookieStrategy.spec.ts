@@ -9,9 +9,7 @@ test('SignedCookieStrategy#finalize saves session.data if changed', async t => {
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       session.data = {
@@ -21,7 +19,7 @@ test('SignedCookieStrategy#finalize saves session.data if changed', async t => {
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     const postResponse = await got.post(url)
     t.deepEqual(postResponse.headers['set-cookie'], [
       `session=${encodeURIComponent(
@@ -38,9 +36,7 @@ test('SignedCookieStrategy#finalize uses a function to determine secure attribut
     secret: 'test',
     secure: () => true
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       session.data = {
@@ -50,7 +46,7 @@ test('SignedCookieStrategy#finalize uses a function to determine secure attribut
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     const postResponse = await got.post(url)
     t.deepEqual(postResponse.headers['set-cookie'], [
       `session=${encodeURIComponent(
@@ -67,16 +63,14 @@ test('SignedCookieStrategy#loadData returns session data', async t => {
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       return session.data
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     cookieJar.setCookieSync(
       `session=${encodeURIComponent(
         strategy.serialize({
@@ -100,16 +94,14 @@ test('SignedCookieStrategy#loadData returns null if session data is invalid(Wron
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       return session.data
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     cookieJar.setCookieSync(
       `session=${encodeURIComponent(
         JSON.stringify({
@@ -130,16 +122,14 @@ test('SignedCookieStrategy#loadData returns null if session data is invalid(Inva
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       return session.data
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     cookieJar.setCookieSync(
       `session=${encodeURIComponent(
         's:' +
@@ -162,16 +152,14 @@ test('SignedCookieStrategy#finalize touches maxAge if session data exists', asyn
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       return 'OK'
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     cookieJar.setCookieSync(
       `session=${encodeURIComponent(
         strategy.serialize({
@@ -197,16 +185,14 @@ test('SignedCookieStrategy#finalize does NOT touch maxAge if session data does n
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       return 'OK'
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     const postResponse = await got.post(url)
     t.is(postResponse.headers['set-cookie'], undefined)
   })
@@ -217,9 +203,7 @@ test('SignedCookieStrategy#finalize destroys session.data if changed to null', a
   const strategy = new SignedCookieStrategy({
     secret: 'test'
   })
-  const { Session, sessionMiddleware } = createSession({
-    strategy
-  })
+  const { Session, SessionMiddleware } = createSession(strategy)
   class Handler {
     async handle(@Session() session: SessionState<any>) {
       session.data = null
@@ -227,7 +211,7 @@ test('SignedCookieStrategy#finalize destroys session.data if changed to null', a
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     cookieJar.setCookieSync(
       `session=${encodeURIComponent(
         strategy.serialize({
