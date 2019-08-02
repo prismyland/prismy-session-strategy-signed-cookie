@@ -8,11 +8,11 @@ import { SignedCookieStrategy } from '../src'
 
 test('integration test', async t => {
   const cookieJar = new CookieJar()
-  const { Session, sessionMiddleware } = createSession({
-    strategy: new SignedCookieStrategy({
+  const { Session, SessionMiddleware } = createSession(
+    new SignedCookieStrategy({
       secret: 'test'
     })
-  })
+  )
   class Handler {
     async handle(
       @Method() method: string,
@@ -28,7 +28,7 @@ test('integration test', async t => {
     }
   }
 
-  await testServer([sessionMiddleware, Handler], async url => {
+  await testServer([SessionMiddleware, Handler], async url => {
     const postResponse = await got.post(url, {
       cookieJar
     })
