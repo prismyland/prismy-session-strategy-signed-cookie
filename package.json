@@ -33,7 +33,7 @@
     "url": "https://github.com/prismyland/prismy-session-strategy-signed-cookie/issues"
   },
   "devDependencies": {
-    "@types/cookie-signature": "^1.0.2",
+    "@types/cookie-signature": "^1.0.3",
     "@types/got": "^9.4.4",
     "@types/node": "^12.0.2",
     "@types/tough-cookie": "^2.3.5",
@@ -42,10 +42,10 @@
     "got": "^9.6.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
-    "prismy": "^0.11.0",
-    "prismy-cookie": "^0.4.0",
-    "prismy-session": "^0.1.0",
-    "prismy-test-server": "^0.3.0",
+    "prismy": "^0.13.0",
+    "prismy-cookie": "^0.4.1",
+    "prismy-session": "^0.1.1",
+    "prismy-test-server": "^0.4.1",
     "rimraf": "^2.6.3",
     "tough-cookie": "^3.0.1",
     "ts-node": "^8.2.0",
