@@ -24,7 +24,7 @@ type InternalSignedCookieStrategyOptions = Required<
 const signedCookieRegExp = /^s:.+/
 
 export class SignedCookieStrategy implements SessionStrategy {
-  value?: unknown
+  value?: any
   options: InternalSignedCookieStrategyOptions
 
   constructor(options: SignedCookieStrategyOptions) {
@@ -38,7 +38,7 @@ export class SignedCookieStrategy implements SessionStrategy {
     }
   }
 
-  loadData(context: Context): unknown | null {
+  loadData(context: Context): any | null {
     const cookieStore = cookieSelector(context)
     const cookie = cookieStore.get()
 
